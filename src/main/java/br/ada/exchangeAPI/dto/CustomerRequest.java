@@ -1,5 +1,6 @@
 package br.ada.exchangeAPI.dto;
 
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -8,7 +9,7 @@ import lombok.Getter;
 public class CustomerRequest {
   private String name;
   private String cpf;
-  private String dataNascimento;
-  private String estadoCivil;
-  private String sexo;
+  private LocalDate birthDate;
+  private String maritalStatus;
+  private String sex;
 }
