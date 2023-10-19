@@ -1,4 +1,4 @@
-package br.ada.exchangeAPI.dto;
+package br.ada.exchangeAPI.controller.dto;
 
 import br.ada.exchangeAPI.model.enums.MaritalStatus;
 import br.ada.exchangeAPI.model.enums.Sex;

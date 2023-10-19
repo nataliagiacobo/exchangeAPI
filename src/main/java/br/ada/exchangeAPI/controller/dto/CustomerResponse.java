@@ -1,4 +1,4 @@
-package br.ada.exchangeAPI.dto;
+package br.ada.exchangeAPI.controller.dto;
 
 import lombok.Getter;
 import lombok.Setter;

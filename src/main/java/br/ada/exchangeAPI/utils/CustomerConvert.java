@@ -1,10 +1,9 @@
 package br.ada.exchangeAPI.utils;
 
-import br.ada.exchangeAPI.dto.CustomerRequest;
-import br.ada.exchangeAPI.dto.CustomerResponse;
+import br.ada.exchangeAPI.controller.dto.CustomerRequest;
+import br.ada.exchangeAPI.controller.dto.CustomerResponse;
 import br.ada.exchangeAPI.model.Customer;
-import br.ada.exchangeAPI.model.enums.MaritalStatus;
-import br.ada.exchangeAPI.model.enums.Sex;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +14,8 @@ public class CustomerConvert {
     customer.setName(customerRequest.getName());
     customer.setCpf(customerRequest.getCpf());
     customer.setBirthDate(customerRequest.getBirthDate());
-    customer.setMaritalStatus(MaritalStatus.valueOf(customerRequest.getMaritalStatus()));
-    customer.setSex(Sex.valueOf(customerRequest.getSex()));
+    customer.setMaritalStatus(customerRequest.getMaritalStatus());
+    customer.setSex(customerRequest.getSex());
 
     return customer;
   }
