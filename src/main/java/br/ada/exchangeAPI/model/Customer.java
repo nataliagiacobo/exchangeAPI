@@ -10,12 +10,15 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
+import org.hibernate.annotations.Where;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
 @Table(name = "customers")
+@Where(clause = "active is true")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
