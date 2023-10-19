@@ -18,7 +18,7 @@ public class Order {
     private Integer id; //generated
 
     @ManyToOne()
-    private Customer cpf; //related to customers table - cpf
+    private Customer customer; //related to customers table -> cpf
 
     @Column(name = "currency", nullable = false)
     private String currency; //input
