@@ -6,7 +6,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "orders")
@@ -14,7 +14,7 @@ import java.time.Instant;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id; //generated
 
     @ManyToOne()
@@ -33,11 +33,11 @@ public class Order {
     private BigDecimal operationCost; //calculated
 
     @Column(name = "bank_branch", nullable = false)
-    private Integer bankBranch; //input
+    private String bankBranch; //input
 
     @Column(name = "order_date")
     @CreatedDate
-    private Instant orderTimestamp; //generated
+    private LocalDateTime orderTimestamp; //generated
 
 
 //    Response body da ordem de compra:
