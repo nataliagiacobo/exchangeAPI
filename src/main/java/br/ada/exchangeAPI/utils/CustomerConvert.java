@@ -24,6 +24,7 @@ public class CustomerConvert {
     CustomerResponse customerResponse = new CustomerResponse();
     customerResponse.setId(customer.getId());
     customerResponse.setName(customer.getName());
+    customerResponse.setCpf(customer.getCpf());
     customerResponse.setBirthDate(customer.getBirthDate());
     customerResponse.setMaritalStatus(customer.getMaritalStatus());
     customerResponse.setSex(customer.getSex());

@@ -33,5 +33,13 @@ public class CustomerController {
 	public void deleteCustomer(@PathVariable Integer id){
 		customerService.deleteCustomer(id);
 	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<CustomerResponse> updateCustomer(
+			@RequestBody CustomerRequest customerRequest,
+			@PathVariable Integer id
+			){
+		return ResponseEntity.ok(customerService.updateCustomer(customerRequest, id));
+	}
 
 }

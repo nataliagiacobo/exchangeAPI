@@ -23,6 +23,7 @@ public class CustomerService {
 
 	public CustomerResponse saveNewCustomer(CustomerRequest customerRequest) {
 		Customer customerEntity = customerRepository.save(CustomerConvert.toEntity(customerRequest));
+		customerEntity.setActive(true);
 		return CustomerConvert.toResponse(customerEntity);
 	}
 
@@ -30,5 +31,12 @@ public class CustomerService {
 		Customer customer = customerRepository.findById(id).orElseThrow();
 		customer.setActive(false);
 		customerRepository.save(customer);
+	}
+	
+	public CustomerResponse updateCustomer(CustomerRequest customerRequest, Integer id) {
+		Customer customer = CustomerConvert.toEntity(customerRequest);
+		customer.setId(id);
+		customer.setActive(true);
+		return CustomerConvert.toResponse(customerRepository.save(customer));
 	}
 }

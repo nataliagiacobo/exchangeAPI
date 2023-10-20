@@ -21,7 +21,7 @@ import org.hibernate.annotations.Where;
 @Where(clause = "active is true")
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
 
     @Column(name = "name", nullable = false)
