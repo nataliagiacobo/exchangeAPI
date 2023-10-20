@@ -26,4 +26,9 @@ public class CustomerService {
 		return CustomerConvert.toResponse(customerEntity);
 	}
 
+	public void deleteCustomer(Integer id) {
+		Customer customer = customerRepository.findById(id).orElseThrow();
+		customer.setActive(false);
+		customerRepository.save(customer);
+	}
 }
