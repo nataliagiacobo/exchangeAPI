@@ -1,5 +1,7 @@
 package br.ada.exchangeAPI.service;
 
+import br.ada.exchangeAPI.controller.dto.CustomerRequest;
+import br.ada.exchangeAPI.model.Customer;
 import java.util.List;
 
 import br.ada.exchangeAPI.utils.CustomerConvert;
@@ -15,8 +17,13 @@ public class CustomerService {
 	@Autowired
 	CustomerRepository customerRepository;
 
-	public CustomerResponse getCustomerByCpf(String customerCpf){
-        return CustomerConvert.toResponse(customerRepository.findCustomerByCpf(customerCpf));
-    }
+	public CustomerResponse getCustomerByCpf(String customerCpf) {
+		return CustomerConvert.toResponse(customerRepository.findCustomerByCpf(customerCpf));
+	}
+
+	public CustomerResponse saveNewCustomer(CustomerRequest customerRequest) {
+		Customer customerEntity = customerRepository.save(CustomerConvert.toEntity(customerRequest));
+		return CustomerConvert.toResponse(customerEntity);
+	}
 
 }
