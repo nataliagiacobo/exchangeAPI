@@ -1,17 +1,17 @@
 package br.ada.exchangeAPI.utils;
 
+import br.ada.exchangeAPI.controller.dto.OrderRequest;
 import br.ada.exchangeAPI.controller.dto.OrderResponse;
+import br.ada.exchangeAPI.model.Customer;
 import br.ada.exchangeAPI.model.Order;
 
 public class OrderConvert {
     
-    public static Order toEntity(Order orderDTO) {
+    public static Order toEntity(OrderRequest orderDTO, Customer customer) {
         Order order = new Order();
-        order.setCustomer(orderDTO.getCustomer());
+        order.setCustomer(customer);
         order.setCurrency(orderDTO.getCurrency());
         order.setExchangeAmount(orderDTO.getExchangeAmount());
-        order.setQuotation(orderDTO.getQuotation());
-        order.setOperationCost(orderDTO.getOperationCost());
         order.setBankBranch(orderDTO.getBankBranch());
         return order;
     }

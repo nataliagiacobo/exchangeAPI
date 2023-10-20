@@ -1,7 +1,7 @@
 package br.ada.exchangeAPI.controller.dto;
 
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +15,7 @@ public class OrderResponse {
     private BigDecimal exchangeAmount;
     private BigDecimal quotation;
     private BigDecimal operationCost;
-    private Integer bankBranch;
-    private Instant orderTimestamp;
+    private String bankBranch;
+    private LocalDateTime orderTimestamp;
 
 }
