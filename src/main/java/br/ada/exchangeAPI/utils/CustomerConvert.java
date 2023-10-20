@@ -22,7 +22,11 @@ public class CustomerConvert {
 
   public static CustomerResponse toResponse(Customer customer) {
     CustomerResponse customerResponse = new CustomerResponse();
-    customerResponse.setId(customerResponse.getId());
+    customerResponse.setId(customer.getId());
+    customerResponse.setName(customer.getName());
+    customerResponse.setBirthDate(customer.getBirthDate());
+    customerResponse.setMaritalStatus(customer.getMaritalStatus());
+    customerResponse.setSex(customer.getSex());
 
     return customerResponse;
   }
