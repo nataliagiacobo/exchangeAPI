@@ -11,6 +11,7 @@ import lombok.Setter;
 public class CustomerResponse {
   private Integer id;
   private String name;
+  private String cpf;
   private LocalDate birthDate;
   private MaritalStatus maritalStatus;
   private Sex sex;
