@@ -2,6 +2,7 @@ package br.ada.exchangeAPI.service;
 
 import br.ada.exchangeAPI.controller.dto.OrderRequest;
 import br.ada.exchangeAPI.controller.dto.OrderResponse;
+import br.ada.exchangeAPI.controller.exception.CurrencyException;
 import br.ada.exchangeAPI.model.Customer;
 import br.ada.exchangeAPI.model.Order;
 import br.ada.exchangeAPI.repository.CustomerRepository;
@@ -24,7 +25,7 @@ public class OrderService {
     @Autowired
     QuotationService quotationService;
 
-    public OrderResponse saveOrder(OrderRequest orderDTO) {
+    public OrderResponse saveOrder(OrderRequest orderDTO) throws CurrencyException {
         Customer customerExist = customerRepository.findCustomerByCpf(orderDTO.getCpf());
         if (customerExist == null) throw new RuntimeException("CPF not found");
 
@@ -33,7 +34,7 @@ public class OrderService {
 
         String currency = order.getCurrency();
         if (!"USD".equals(currency) && !"EUR".equals(currency)) {
-            throw new RuntimeException("Currency must be USD or EUR");
+            throw new CurrencyException("Currency must be USD or EUR");
         }
 
         //BigDecimal quotation = quotationService.getBid();
