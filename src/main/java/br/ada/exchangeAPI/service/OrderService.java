@@ -26,32 +26,36 @@ public class OrderService {
     QuotationService quotationService;
 
     public OrderResponse saveOrder(OrderRequest orderDTO) throws CurrencyException {
+        
         Customer customerExist = customerRepository.findCustomerByCpf(orderDTO.getCpf());
         if (customerExist == null) throw new RuntimeException("CPF not found");
 
         Order order = OrderConvert.toEntity(orderDTO, customerExist);
         order.setOrderTimestamp(LocalDateTime.now());
 
-        String currency = order.getCurrency();
-        if (!"USD".equals(currency) && !"EUR".equals(currency)) {
-            throw new CurrencyException("Currency must be USD or EUR");
-        }
+        String currency = order.getCurrency();        
 
-        //BigDecimal quotation = quotationService.getBid();
-        
+        BigDecimal exchangeRate = bidValue(currency);
+        order.setQuotation(exchangeRate);
 
-        //verificar se cpf existe - ok
-        //verificar se é usd ou eur - ok
-        //imprimir horário - ok
-        //objeto correto - ok
-        //consultar cotação do dia e armazenar
-        //conta: cotação * valor da compra
+        BigDecimal operationCost = convertValue(order.getExchangeAmount(), exchangeRate);
+        order.setOperationCost(operationCost);
         
         return OrderConvert.toResponse(orderRepository.save(order));
     }
 
-    private BigDecimal convertValue() {
-        return BigDecimal.ONE;
+    private BigDecimal bidValue(String currency) throws CurrencyException {
+
+        if ("USD".equals(currency) || "EUR".equals(currency)) {
+            return QuotationService.getBid(currency);
+        } else {
+            throw new CurrencyException("Currency must be USD or EUR");
+        }
+
+    }
+
+    private BigDecimal convertValue(BigDecimal exchangeAmount, BigDecimal exchangeRate) {
+        return BigDecimal.valueOf(1111111);
     }
 
 }
