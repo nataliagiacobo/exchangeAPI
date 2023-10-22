@@ -2,6 +2,7 @@ package br.ada.exchangeAPI.controller;
 
 import br.ada.exchangeAPI.controller.dto.OrderRequest;
 import br.ada.exchangeAPI.controller.dto.OrderResponse;
+import br.ada.exchangeAPI.controller.exception.CurrencyException;
 import br.ada.exchangeAPI.service.OrderService;
 import jakarta.validation.Valid;
 
@@ -22,7 +23,7 @@ public class OrderController {
     OrderService orderService;
 
     @PostMapping
-    public ResponseEntity<OrderResponse> saveOrder(@Valid @RequestBody OrderRequest orderDTO) {
+    public ResponseEntity<OrderResponse> saveOrder(@Valid @RequestBody OrderRequest orderDTO) throws CurrencyException {
         OrderResponse order =  orderService.saveOrder(orderDTO);
         return ResponseEntity.created(URI.create("/order/" + order.getId())).body(order);
     }  
