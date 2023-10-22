@@ -24,7 +24,7 @@ public class CustomerService {
 	public CustomerResponse saveNewCustomer(CustomerRequest customerRequest) {
 		Customer customerEntity = customerRepository.save(CustomerConvert.toEntity(customerRequest));
 		customerEntity.setActive(true);
-		return CustomerConvert.toResponse(customerEntity);
+		return CustomerConvert.toResponse(customerRepository.save(customerEntity));
 	}
 
 	public void deleteCustomer(Integer id) {
