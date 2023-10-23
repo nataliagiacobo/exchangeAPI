@@ -3,6 +3,7 @@ package br.ada.exchangeAPI.controller;
 import br.ada.exchangeAPI.controller.dto.CustomerRequest;
 import br.ada.exchangeAPI.controller.dto.CustomerResponse;
 import java.net.URI;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,11 @@ public class CustomerController {
 	){
 		CustomerResponse customer = customerService.saveNewCustomer(customerRequest);
 		return ResponseEntity.created(URI.create("/customer/"+customer.getId())).body(customer);
+	}
+
+	@GetMapping()
+	public ResponseEntity<List<CustomerResponse>> getAllCustomers(){
+		return ResponseEntity.ok(customerService.getAllCustomers());
 	}
 
 	@DeleteMapping("/{id}")

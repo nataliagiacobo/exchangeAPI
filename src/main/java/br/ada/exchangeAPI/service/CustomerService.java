@@ -27,6 +27,11 @@ public class CustomerService {
 		return CustomerConvert.toResponse(customerRepository.save(customerEntity));
 	}
 
+	public List<CustomerResponse> getAllCustomers() {
+		List<Customer> customers = customerRepository.findAll();
+		return CustomerConvert.toResponseList(customers);
+	}
+
 	public void deleteCustomer(Integer id) {
 		Customer customer = customerRepository.findById(id).orElseThrow();
 		customer.setActive(false);
