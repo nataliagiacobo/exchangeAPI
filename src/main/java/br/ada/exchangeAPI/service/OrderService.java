@@ -35,10 +35,10 @@ public class OrderService {
 
         String currency = order.getCurrency();        
 
-        BigDecimal exchangeRate = bidValue(currency);
-        order.setQuotation(exchangeRate);
+        BigDecimal exchangeRate = bidValue(currency); //retorna cotação
+        order.setQuotation(exchangeRate); // salva o valor da cotação no atributo da order
 
-        BigDecimal operationCost = convertValue(order.getExchangeAmount(), exchangeRate);
+        BigDecimal operationCost = operationCostComputation(order.getExchangeAmount(), exchangeRate); // ... (valor em 'currencyX', cotação)
         order.setOperationCost(operationCost);
         
         return OrderConvert.toResponse(orderRepository.save(order));
@@ -54,8 +54,9 @@ public class OrderService {
 
     }
 
-    private BigDecimal convertValue(BigDecimal exchangeAmount, BigDecimal exchangeRate) {
-        return BigDecimal.valueOf(1111111);
+    private BigDecimal operationCostComputation(BigDecimal exchangeAmount, BigDecimal exchangeRate) {
+        BigDecimal cost = exchangeAmount.multiply(exchangeRate);
+        return cost;
     }
 
 }
