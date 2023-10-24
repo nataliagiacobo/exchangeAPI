@@ -1,5 +1,8 @@
 package br.ada.exchangeAPI.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.ada.exchangeAPI.controller.dto.OrderRequest;
 import br.ada.exchangeAPI.controller.dto.OrderResponse;
 import br.ada.exchangeAPI.model.Customer;
@@ -28,4 +31,14 @@ public class OrderConvert {
         orderResponse.setBankBranch(order.getBankBranch());
         return orderResponse;
     }
+
+    public static List<OrderResponse> toResponseList(List<Order> orders) {
+        List<OrderResponse> orderResponses = new ArrayList<>();
+        for (Order order : orders) {
+            OrderResponse orderResponse = OrderConvert.toResponse(order);
+            orderResponses.add(orderResponse);
+        }
+        return orderResponses;
+    }
+    
 }
