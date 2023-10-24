@@ -1,10 +1,12 @@
 package br.ada.exchangeAPI.service;
 
 import br.ada.exchangeAPI.controller.dto.CustomerRequest;
+import br.ada.exchangeAPI.controller.exception.CpfValidationError;
 import br.ada.exchangeAPI.model.Customer;
 import java.util.List;
 
 import br.ada.exchangeAPI.utils.CustomerConvert;
+import br.ada.exchangeAPI.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +23,11 @@ public class CustomerService {
 		return CustomerConvert.toResponse(customerRepository.findCustomerByCpf(customerCpf));
 	}
 
-	public CustomerResponse saveNewCustomer(CustomerRequest customerRequest) {
-		Customer customerEntity = customerRepository.save(CustomerConvert.toEntity(customerRequest));
+	public CustomerResponse saveNewCustomer(CustomerRequest customerRequest) throws CpfValidationError {
+		Customer customer = CustomerConvert.toEntity(customerRequest);
+		if(!Validator.cpfValidate(customer.getCpf())) throw new CpfValidationError("Cpf inválido");
+		Customer customerEntity = customerRepository.save(customer);
+
 		customerEntity.setActive(true);
 		return CustomerConvert.toResponse(customerRepository.save(customerEntity));
 	}
