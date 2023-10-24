@@ -33,7 +33,7 @@ public class OrderController {
     }  
 
     @GetMapping("/cpf/{cpf}")
-	public ResponseEntity<List<OrderResponse>> getOrdersByCpf(@PathVariable String cpf) {
+	public ResponseEntity<List<OrderResponse>> getOrdersByCpf(@PathVariable String cpf) throws CpfNotFoundError {
 		return ResponseEntity.ok(orderService.getOrdersByCpf(cpf));
 	}
 
