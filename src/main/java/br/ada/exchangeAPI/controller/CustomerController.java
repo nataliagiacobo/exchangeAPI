@@ -4,6 +4,9 @@ import br.ada.exchangeAPI.controller.dto.CustomerRequest;
 import br.ada.exchangeAPI.controller.dto.CustomerResponse;
 import java.net.URI;
 import java.util.List;
+
+import br.ada.exchangeAPI.controller.exception.CpfValidationError;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +27,8 @@ public class CustomerController {
 
 	@PostMapping()
 	public ResponseEntity<CustomerResponse> saveNewCustomer(
-			@RequestBody CustomerRequest customerRequest
-	){
+			@Valid @RequestBody CustomerRequest customerRequest
+	) throws CpfValidationError {
 		CustomerResponse customer = customerService.saveNewCustomer(customerRequest);
 		return ResponseEntity.created(URI.create("/customer/"+customer.getId())).body(customer);
 	}

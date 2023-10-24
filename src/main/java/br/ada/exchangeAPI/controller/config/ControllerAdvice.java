@@ -1,5 +1,6 @@
 package br.ada.exchangeAPI.controller.config;
 
+import br.ada.exchangeAPI.controller.exception.CpfValidationError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,13 @@ public class ControllerAdvice {
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(CurrencyException.class)
     public String handlerCurrency(CurrencyException exception){
+        return exception.getDescription();
+    }
+
+
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(CpfValidationError.class)
+    public String handlerCpf(CpfValidationError exception){
         return exception.getDescription();
     }
 }
