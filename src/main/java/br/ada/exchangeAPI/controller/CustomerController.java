@@ -5,6 +5,7 @@ import br.ada.exchangeAPI.controller.dto.CustomerResponse;
 import java.net.URI;
 import java.util.List;
 
+import br.ada.exchangeAPI.controller.exception.CpfNotFoundError;
 import br.ada.exchangeAPI.controller.exception.CpfValidationError;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class CustomerController {
 	CustomerService customerService;
 	
 	@GetMapping("/cpf/{cpf}")
-	public ResponseEntity<CustomerResponse> getCustomerByCpf(@PathVariable String cpf){
+	public ResponseEntity<CustomerResponse> getCustomerByCpf(@PathVariable String cpf) throws CpfNotFoundError{
 		return ResponseEntity.ok(customerService.getCustomerByCpf(cpf));
 	}
 
