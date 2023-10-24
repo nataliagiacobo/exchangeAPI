@@ -1,6 +1,7 @@
 package br.ada.exchangeAPI.service;
 
 import br.ada.exchangeAPI.controller.dto.CustomerRequest;
+import br.ada.exchangeAPI.controller.exception.CpfNotFoundError;
 import br.ada.exchangeAPI.controller.exception.CpfValidationError;
 import br.ada.exchangeAPI.model.Customer;
 import java.util.List;
@@ -19,8 +20,10 @@ public class CustomerService {
 	@Autowired
 	CustomerRepository customerRepository;
 
-	public CustomerResponse getCustomerByCpf(String customerCpf) {
-		return CustomerConvert.toResponse(customerRepository.findCustomerByCpf(customerCpf));
+	public CustomerResponse getCustomerByCpf(String customerCpf) throws CpfNotFoundError {
+		Customer customerExist = customerRepository.findCustomerByCpf(customerCpf);
+        if (customerExist == null) throw new CpfNotFoundError("CPF not found");
+		return CustomerConvert.toResponse(customerExist);
 	}
 
 	public CustomerResponse saveNewCustomer(CustomerRequest customerRequest) throws CpfValidationError {

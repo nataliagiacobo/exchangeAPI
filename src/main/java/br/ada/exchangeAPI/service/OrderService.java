@@ -2,6 +2,7 @@ package br.ada.exchangeAPI.service;
 
 import br.ada.exchangeAPI.controller.dto.OrderRequest;
 import br.ada.exchangeAPI.controller.dto.OrderResponse;
+import br.ada.exchangeAPI.controller.exception.CpfNotFoundError;
 import br.ada.exchangeAPI.controller.exception.CurrencyException;
 import br.ada.exchangeAPI.model.Customer;
 import br.ada.exchangeAPI.model.Order;
@@ -27,10 +28,10 @@ public class OrderService {
     @Autowired
     QuotationService quotationService;
 
-    public OrderResponse saveOrder(OrderRequest orderDTO) throws CurrencyException {
+    public OrderResponse saveOrder(OrderRequest orderDTO) throws CurrencyException, CpfNotFoundError {
         
         Customer customerExist = customerRepository.findCustomerByCpf(orderDTO.getCpf());
-        if (customerExist == null) throw new RuntimeException("CPF not found");
+        if (customerExist == null) throw new CpfNotFoundError("CPF not found");
 
         Order order = OrderConvert.toEntity(orderDTO, customerExist);    
 
