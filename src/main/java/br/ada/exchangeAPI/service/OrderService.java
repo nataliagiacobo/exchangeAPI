@@ -8,6 +8,7 @@ import br.ada.exchangeAPI.model.Customer;
 import br.ada.exchangeAPI.model.Order;
 import br.ada.exchangeAPI.repository.CustomerRepository;
 import br.ada.exchangeAPI.repository.OrderRepository;
+import br.ada.exchangeAPI.utils.OrderCalculate;
 import br.ada.exchangeAPI.utils.OrderConvert;
 
 import java.math.BigDecimal;
@@ -17,6 +18,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import static br.ada.exchangeAPI.utils.OrderCalculate.bidValue;
+import static br.ada.exchangeAPI.utils.OrderCalculate.operationCostValue;
 
 @Service
 public class OrderService {
@@ -35,28 +39,16 @@ public class OrderService {
 
         Order order = OrderConvert.toEntity(orderDTO, customerExist);    
 
-        BigDecimal exchangeRate = bidValue(order.getCurrency()); 
+        BigDecimal exchangeRate = OrderCalculate.bidValue(order.getCurrency());
         order.setQuotation(exchangeRate); 
 
-        order.setOperationCost(operationCostValue(order.getExchangeAmount(), exchangeRate));
+        order.setOperationCost(OrderCalculate.operationCostValue(order.getExchangeAmount(), exchangeRate));
 
         order.setOrderTimestamp(LocalDateTime.now());
         
         return OrderConvert.toResponse(orderRepository.save(order));
     }
 
-    private BigDecimal bidValue(String currency) throws CurrencyException {
-        if ("USD".equals(currency) || "EUR".equals(currency)) {
-            return QuotationService.getBid(currency);
-        } else {
-            throw new CurrencyException("Currency must be USD or EUR");
-        }
-    }
-
-    private BigDecimal operationCostValue(BigDecimal exchangeAmount, BigDecimal exchangeRate) {
-        BigDecimal cost = exchangeAmount.multiply(exchangeRate);
-        return cost;
-    }
 
     public List<OrderResponse> getOrdersByCpf(String cpf) throws CpfNotFoundError {
         Customer customerExist = customerRepository.findCustomerByCpf(cpf);
