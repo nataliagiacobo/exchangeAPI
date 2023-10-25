@@ -21,10 +21,13 @@ public class CustomerService {
 	CustomerRepository customerRepository;
 
 	public CustomerResponse getCustomerByCpf(String customerCpf) throws CpfNotFoundError {
-		Customer customerExist = customerRepository.findCustomerByCpf(customerCpf);
-        if (customerExist == null) throw new CpfNotFoundError("CPF not found");
+//		Customer customerExist = customerRepository.findCustomerByCpf(customerCpf);
+//        if (customerExist == null) throw new CpfNotFoundError("CPF not found");
+		Validator validator = new Validator(customerRepository);
+		Customer customerExist = validator.cpfExists(customerCpf);
 		return CustomerConvert.toResponse(customerExist);
 	}
+
 
 	public CustomerResponse saveNewCustomer(CustomerRequest customerRequest) throws CpfValidationError {
 		Customer customer = CustomerConvert.toEntity(customerRequest);

@@ -4,7 +4,6 @@ import br.ada.exchangeAPI.model.enums.MaritalStatus;
 import br.ada.exchangeAPI.model.enums.Sex;
 import java.time.LocalDate;
 
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.hibernate.validator.constraints.br.CPF;
@@ -14,7 +13,8 @@ import org.hibernate.validator.constraints.br.CPF;
 public class CustomerRequest {
   private String name;
 
-  @Pattern(regexp = "^\d{3}\x2E\d{3}\x2E\d{3}\x2D\d{2}$")
+//  @Pattern(regexp = "^\\d{3}\\x2E\\d{3}\\x2E\\d{3}\\x2D\\d{2}$")
+
   private String cpf;
   private LocalDate birthDate;
   private MaritalStatus maritalStatus;
