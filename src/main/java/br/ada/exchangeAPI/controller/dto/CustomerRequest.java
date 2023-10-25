@@ -11,10 +11,7 @@ import org.hibernate.validator.constraints.br.CPF;
 @AllArgsConstructor
 public class CustomerRequest {
   private String name;
-
-  @CPF
   private String cpf;
-
   private LocalDate birthDate;
   private MaritalStatus maritalStatus;
   private Sex sex;
