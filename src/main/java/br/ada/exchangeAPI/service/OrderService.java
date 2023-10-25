@@ -58,9 +58,9 @@ public class OrderService {
         return cost;
     }
 
-    public List<OrderResponse> getOrdersByCpf(String cpf) {
+    public List<OrderResponse> getOrdersByCpf(String cpf) throws CpfNotFoundError {
         Customer customerExist = customerRepository.findCustomerByCpf(cpf);
-        if (customerExist == null) throw new RuntimeException("CPF not found");
+        if (customerExist == null) throw new CpfNotFoundError("CPF not found");
 
         List<Order> ordersLs = orderRepository.findOrdersByCustomer(customerExist.getId());
 
