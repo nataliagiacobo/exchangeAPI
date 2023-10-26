@@ -1,5 +1,6 @@
 package br.ada.exchangeAPI.model;
 
+import br.ada.exchangeAPI.controller.dto.CustomerResponse;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,8 +40,7 @@ public class Order {
     @CreatedDate
     private LocalDateTime orderTimestamp; //generated
 
-
-//    precision = 19, scale = 3
+    //    precision = 19, scale = 3
 
 //    Response body da ordem de compra:
 //    {

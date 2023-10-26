@@ -20,16 +20,21 @@ public class CustomerConvert {
     return customer;
   }
 
-  public static Customer toEntity(CustomerResponse customerResponse) {
-    Customer customer = new Customer();
-    customer.setName(customerResponse.getName());
-    customer.setCpf(customerResponse.getCpf());
-    customer.setBirthDate(customerResponse.getBirthDate());
-    customer.setMaritalStatus(customerResponse.getMaritalStatus());
-    customer.setSex(customerResponse.getSex());
+  // pra ter um objeto Customer que o programa entenda que já está no banco de dados
+//  public static Customer toEntity(CustomerResponse customerResponse) {
+//    Integer id = customerResponse.getId();
+//    Customer customer = customerService.findCustomerById(id);
 
-    return customer;
-  }
+////    customer.equals(customerResponse);
+
+////    customer.setName(customerResponse.getName());
+////    customer.setCpf(customerResponse.getCpf());
+////    customer.setBirthDate(customerResponse.getBirthDate());
+////    customer.setMaritalStatus(customerResponse.getMaritalStatus());
+////    customer.setSex(customerResponse.getSex());
+//
+//    return customer;
+//  }
 
   public static CustomerResponse toResponse(Customer customer) {
     CustomerResponse customerResponse = new CustomerResponse();

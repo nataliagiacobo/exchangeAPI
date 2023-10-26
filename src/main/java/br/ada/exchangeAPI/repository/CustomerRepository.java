@@ -10,4 +10,9 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     @Query(value = "SELECT * FROM CUSTOMERS WHERE CPF = :customerCpf", nativeQuery = true)
     Customer findCustomerByCpf(String customerCpf);
 
+    @Query(value = "SELECT * FROM CUSTOMERS WHERE ID = :customerId", nativeQuery = true)
+    Customer findCustomerById(Integer customerId);
+
+
+
 }

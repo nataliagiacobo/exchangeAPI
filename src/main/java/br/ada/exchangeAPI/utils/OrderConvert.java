@@ -3,6 +3,7 @@ package br.ada.exchangeAPI.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ada.exchangeAPI.controller.dto.CustomerResponse;
 import br.ada.exchangeAPI.controller.dto.OrderRequest;
 import br.ada.exchangeAPI.controller.dto.OrderResponse;
 import br.ada.exchangeAPI.model.Customer;
@@ -18,6 +19,15 @@ public class OrderConvert {
         order.setBankBranch(orderDTO.getBankBranch());
         return order;
     }
+
+//    public static Order toEntity(OrderRequest orderDTO, CustomerResponse customerResponse) {
+//        Order order = new Order();
+//        order.setCustomer(CustomerConvert.toEntity(customerResponse));
+//        order.setCurrency(orderDTO.getCurrency());
+//        order.setExchangeAmount(orderDTO.getExchangeAmount());
+//        order.setBankBranch(orderDTO.getBankBranch());
+//        return order;
+//    }
 
     public static OrderResponse toResponse(Order order) {
         OrderResponse orderResponse = new OrderResponse();
