@@ -20,6 +20,17 @@ public class CustomerConvert {
     return customer;
   }
 
+  public static Customer toEntity(CustomerResponse customerResponse) {
+    Customer customer = new Customer();
+    customer.setName(customerResponse.getName());
+    customer.setCpf(customerResponse.getCpf());
+    customer.setBirthDate(customerResponse.getBirthDate());
+    customer.setMaritalStatus(customerResponse.getMaritalStatus());
+    customer.setSex(customerResponse.getSex());
+
+    return customer;
+  }
+
   public static CustomerResponse toResponse(Customer customer) {
     CustomerResponse customerResponse = new CustomerResponse();
     customerResponse.setId(customer.getId());

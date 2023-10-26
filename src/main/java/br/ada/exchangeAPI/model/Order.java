@@ -17,7 +17,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id; //generated
 
-    @ManyToOne()
+    @ManyToOne() //(cascade=CascadeType.PERSIST)
     private Customer customer; //related to customers table -> cpf
 
     @Column(name = "currency", nullable = false)

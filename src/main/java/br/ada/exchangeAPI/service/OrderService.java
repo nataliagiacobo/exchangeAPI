@@ -9,6 +9,7 @@ import br.ada.exchangeAPI.model.Customer;
 import br.ada.exchangeAPI.model.Order;
 import br.ada.exchangeAPI.repository.CustomerRepository;
 import br.ada.exchangeAPI.repository.OrderRepository;
+import br.ada.exchangeAPI.utils.CustomerConvert;
 import br.ada.exchangeAPI.utils.OrderCalculate;
 import br.ada.exchangeAPI.utils.OrderConvert;
 
@@ -20,8 +21,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static br.ada.exchangeAPI.utils.OrderCalculate.bidValue;
-import static br.ada.exchangeAPI.utils.OrderCalculate.operationCostValue;
 
 @Service
 public class OrderService {
@@ -36,18 +35,15 @@ public class OrderService {
     CustomerService customerService;
 
     public OrderResponse saveOrder(OrderRequest orderDTO) throws CurrencyException, CpfNotFoundError {
+//        Customer customerExist = customerRepository.findCustomerByCpf(orderDTO.getCpf());
+//        if (customerExist == null) throw new CpfNotFoundError("CPF not found");
+        CustomerResponse existingCustomer = customerService.getCustomerByCpf(orderDTO.getCpf());
+        Order order = OrderConvert.toEntity(orderDTO, CustomerConvert.toEntity(existingCustomer));
         
-        Customer customerExist = customerRepository.findCustomerByCpf(orderDTO.getCpf());
-        if (customerExist == null) throw new CpfNotFoundError("CPF not found");
-//        CustomerResponse customerExist = customerService.getCustomerByCpf(orderDTO.getCpf());
-
-        Order order = OrderConvert.toEntity(orderDTO, customerExist);    
-
         BigDecimal exchangeRate = OrderCalculate.bidValue(order.getCurrency());
-        order.setQuotation(exchangeRate); 
 
+        order.setQuotation(exchangeRate);
         order.setOperationCost(OrderCalculate.operationCostValue(order.getExchangeAmount(), exchangeRate));
-
         order.setOrderTimestamp(LocalDateTime.now());
         
         return OrderConvert.toResponse(orderRepository.save(order));
@@ -55,13 +51,14 @@ public class OrderService {
 
 
     public List<OrderResponse> getOrdersByCpf(String cpf) throws CpfNotFoundError {
-        Customer customerExist = customerRepository.findCustomerByCpf(cpf);
-        if (customerExist == null) throw new CpfNotFoundError("CPF not found");
+//        Customer customerExist = customerRepository.findCustomerByCpf(cpf);
+//        if (customerExist == null) throw new CpfNotFoundError("CPF not found");
 
-        List<Order> ordersLs = orderRepository.findOrdersByCustomer(customerExist.getId());
+        CustomerResponse existingCustomer = customerService.getCustomerByCpf(cpf);
 
-        if (ordersLs.isEmpty()) return new ArrayList<>();;
-        
+        List<Order> ordersLs = orderRepository.findOrdersByCustomer(existingCustomer.getId());
+
+        if (ordersLs.isEmpty()) return new ArrayList<>();
         return OrderConvert.toResponseList(ordersLs);
     }
 
