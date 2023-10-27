@@ -29,7 +29,7 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<OrderResponse> saveOrder(@Valid @RequestBody OrderRequest orderDTO) throws CurrencyException, CpfNotFoundError {
         OrderResponse order =  orderService.saveOrder(orderDTO);
-        return ResponseEntity.created(URI.create("/order/" + order.getId())).body(order);
+        return ResponseEntity.created(URI.create("/order/" + order.getOrderId())).body(order);
     }  
 
     @GetMapping("/cpf/{cpf}")
