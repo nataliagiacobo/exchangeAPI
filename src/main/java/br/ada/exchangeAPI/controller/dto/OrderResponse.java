@@ -9,7 +9,8 @@ import lombok.Setter;
 @Getter @Setter
 public class OrderResponse {
     
-    private Integer id;
+    private Integer orderId;
+    private Integer customerId;
     private String cpf;
     private String currency; 
     private BigDecimal exchangeAmount;

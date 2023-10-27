@@ -3,7 +3,6 @@ package br.ada.exchangeAPI.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ada.exchangeAPI.controller.dto.CustomerResponse;
 import br.ada.exchangeAPI.controller.dto.OrderRequest;
 import br.ada.exchangeAPI.controller.dto.OrderResponse;
 import br.ada.exchangeAPI.model.Customer;
@@ -31,7 +30,8 @@ public class OrderConvert {
 
     public static OrderResponse toResponse(Order order) {
         OrderResponse orderResponse = new OrderResponse();
-        orderResponse.setId(order.getId());
+        orderResponse.setOrderId(order.getId());
+        orderResponse.setCustomerId(order.getCustomer().getId());
         orderResponse.setCpf(order.getCustomer().getCpf());
         orderResponse.setOrderTimestamp(order.getOrderTimestamp());
         orderResponse.setCurrency(order.getCurrency());
