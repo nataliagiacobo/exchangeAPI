@@ -1,5 +1,6 @@
 package br.ada.exchangeAPI.model;
 
+import br.ada.exchangeAPI.controller.dto.CustomerResponse;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,19 +18,19 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id; //generated
 
-    @ManyToOne()
+    @ManyToOne() //(cascade=CascadeType.PERSIST)
     private Customer customer; //related to customers table -> cpf
 
     @Column(name = "currency", nullable = false)
     private String currency; //input
 
-    @Column(name = "exchange_amount", nullable = false)
+    @Column(name = "exchange_amount", precision = 16, scale = 2, nullable = false)
     private BigDecimal exchangeAmount; //input
 
-    @Column(name = "quotation")
+    @Column(name = "quotation", precision = 5, scale = 4)
     private BigDecimal quotation; //comes from external API - QuotationService
 
-    @Column(name = "operation_cost")
+    @Column(name = "operation_cost", precision = 16, scale = 2)
     private BigDecimal operationCost; //calculated
 
     @Column(name = "bank_branch", nullable = false)
@@ -39,6 +40,7 @@ public class Order {
     @CreatedDate
     private LocalDateTime orderTimestamp; //generated
 
+    //    precision = 19, scale = 3
 
 //    Response body da ordem de compra:
 //    {
