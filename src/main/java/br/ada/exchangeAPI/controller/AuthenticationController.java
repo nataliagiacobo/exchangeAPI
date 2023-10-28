@@ -23,12 +23,12 @@ public class AuthenticationController {
     private AuthenticationManager authenticationManager;
     @PostMapping
     public ResponseEntity login(@RequestBody @Valid LoginRequest loginRequest){
-        UsernamePasswordAuthenticationToken autheticate = new UsernamePasswordAuthenticationToken(
+        UsernamePasswordAuthenticationToken authenticate = new UsernamePasswordAuthenticationToken(
                 loginRequest.getCpf(),
                 loginRequest.getPassword()
         );
 
-        var authentication = authenticationManager.authenticate(autheticate);
+        var authentication = authenticationManager.authenticate(authenticate);
         var token = tokenService.tokenGenerate((Customer) authentication.getPrincipal());
 
         return ResponseEntity.ok().body(new TokenResponse(token));
