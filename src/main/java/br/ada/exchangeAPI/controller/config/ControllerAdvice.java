@@ -25,7 +25,7 @@ public class ControllerAdvice {
         return exception.getDescription();
     }
     
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
     @ExceptionHandler(CpfNotFoundError.class)
     public String handlerCpfNotFound(CpfNotFoundError exception){
         return exception.getDescription();

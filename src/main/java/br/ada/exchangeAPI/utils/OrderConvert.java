@@ -19,9 +19,19 @@ public class OrderConvert {
         return order;
     }
 
+//    public static Order toEntity(OrderRequest orderDTO, CustomerResponse customerResponse) {
+//        Order order = new Order();
+//        order.setCustomer(CustomerConvert.toEntity(customerResponse));
+//        order.setCurrency(orderDTO.getCurrency());
+//        order.setExchangeAmount(orderDTO.getExchangeAmount());
+//        order.setBankBranch(orderDTO.getBankBranch());
+//        return order;
+//    }
+
     public static OrderResponse toResponse(Order order) {
         OrderResponse orderResponse = new OrderResponse();
-        orderResponse.setId(order.getId());
+        orderResponse.setOrderId(order.getId());
+        orderResponse.setCustomerId(order.getCustomer().getId());
         orderResponse.setCpf(order.getCustomer().getCpf());
         orderResponse.setOrderTimestamp(order.getOrderTimestamp());
         orderResponse.setCurrency(order.getCurrency());
