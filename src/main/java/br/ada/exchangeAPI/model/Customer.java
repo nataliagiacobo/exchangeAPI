@@ -41,5 +41,10 @@ public class Customer {
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
+    //TODO alterar nullable
+    //@Column(name = "password",nullable = false)
+    @Column(name = "password",nullable = true)
+    private String password;
+
     private Boolean active;
 }
