@@ -27,7 +27,7 @@ public class TokenService {
                     .withIssuer("Ada Tech")
                     .sign(algorithm);
         }catch (JWTCreationException exception) {
-            throw new RuntimeException("erro to generate token", exception);
+            throw new RuntimeException("error to generate token", exception);
         }
     }
 
