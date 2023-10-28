@@ -19,4 +19,5 @@ public class CustomerRequest {
   private LocalDate birthDate;
   private MaritalStatus maritalStatus;
   private Sex sex;
+  private String password;
 }

@@ -16,6 +16,7 @@ public class CustomerConvert {
     customer.setBirthDate(customerRequest.getBirthDate());
     customer.setMaritalStatus(customerRequest.getMaritalStatus());
     customer.setSex(customerRequest.getSex());
+    customer.setPassword(customerRequest.getPassword());
 
     return customer;
   }

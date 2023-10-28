@@ -9,6 +9,7 @@ import java.util.List;
 import br.ada.exchangeAPI.utils.CustomerConvert;
 import br.ada.exchangeAPI.utils.CPFValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.ada.exchangeAPI.controller.dto.CustomerResponse;
@@ -19,6 +20,9 @@ public class CustomerService {
 	
 	@Autowired
 	CustomerRepository customerRepository;
+
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	public CustomerResponse getCustomerByCpf(String customerCpf) throws CpfNotFoundError {
 		Customer customerExist = customerRepository.findCustomerByCpf(customerCpf);
@@ -34,10 +38,9 @@ public class CustomerService {
 	public CustomerResponse saveNewCustomer(CustomerRequest customerRequest) throws CpfValidationError {
 		Customer customer = CustomerConvert.toEntity(customerRequest);
 		if(!CPFValidator.cpfValidate(customer.getCpf())) throw new CpfValidationError("Cpf inválido");
-		Customer customerEntity = customerRepository.save(customer);
-
-		customerEntity.setActive(true);
-		return CustomerConvert.toResponse(customerRepository.save(customerEntity));
+		customer.setPassword(passwordEncoder.encode(customerRequest.getPassword()));
+		customer.setActive(true);
+		return CustomerConvert.toResponse(customerRepository.save(customer));
 	}
 
 	public List<CustomerResponse> getAllCustomers() {

@@ -5,6 +5,7 @@ import br.ada.exchangeAPI.controller.dto.OrderResponse;
 import br.ada.exchangeAPI.controller.exception.CpfNotFoundError;
 import br.ada.exchangeAPI.controller.exception.CurrencyException;
 import br.ada.exchangeAPI.service.OrderService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 
 import java.net.URI;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/order")
+@SecurityRequirement(name = "bearerAuth")
 public class OrderController {
 
     @Autowired
