@@ -38,11 +38,9 @@ public class CustomerService {
 	public CustomerResponse saveNewCustomer(CustomerRequest customerRequest) throws CpfValidationError {
 		Customer customer = CustomerConvert.toEntity(customerRequest);
 		if(!CPFValidator.cpfValidate(customer.getCpf())) throw new CpfValidationError("Cpf inválido");
-		Customer customerEntity = customerRepository.save(customer);
-
-		customerEntity.setPassword(passwordEncoder.encode(customerRequest.getPassword()));
-		customerEntity.setActive(true);
-		return CustomerConvert.toResponse(customerRepository.save(customerEntity));
+		customer.setPassword(passwordEncoder.encode(customerRequest.getPassword()));
+		customer.setActive(true);
+		return CustomerConvert.toResponse(customerRepository.save(customer));
 	}
 
 	public List<CustomerResponse> getAllCustomers() {

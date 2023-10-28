@@ -9,8 +9,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
 
 import org.hibernate.annotations.Where;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,7 +24,7 @@ import org.hibernate.annotations.Where;
 @Entity
 @Table(name = "customers")
 @Where(clause = "active is true")
-public class Customer {
+public class Customer implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
@@ -41,10 +46,38 @@ public class Customer {
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
-    //TODO alterar nullable
-    //@Column(name = "password",nullable = false)
-    @Column(name = "password",nullable = true)
+    @Column(name = "password",nullable = false)
     private String password;
 
     private Boolean active;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("USER"));
+    }
+
+    @Override
+    public String getUsername() {
+        return this.cpf;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

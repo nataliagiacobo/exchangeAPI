@@ -9,7 +9,7 @@ import br.ada.exchangeAPI.model.Customer;
 import br.ada.exchangeAPI.model.Order;
 import br.ada.exchangeAPI.repository.CustomerRepository;
 import br.ada.exchangeAPI.repository.OrderRepository;
-import br.ada.exchangeAPI.utils.CustomerConvert;
+
 import br.ada.exchangeAPI.utils.OrderCalculate;
 import br.ada.exchangeAPI.utils.OrderConvert;
 
