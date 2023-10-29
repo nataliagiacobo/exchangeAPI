@@ -54,7 +54,7 @@ A proposta é implementar uma API que permita ao cliente realizar a compra de mo
     
     {
       "name": "String",
-      "cpf": "String",
+      "cpf": "String", // 11 dígitos do CPF sem os separadores '12345678901'
       "birthDate": "Date", // Seguir o padrão 'YYYY-MM-DD'
       "maritalStatus": "MaritalStatus", // Valores possíveis: "SINGLE", "MARRIED", "DIVORCED", "WIDOWED"
       "sex": "Sex" // Valores possíveis: "MALE", "FEMALE", "OTHER"
