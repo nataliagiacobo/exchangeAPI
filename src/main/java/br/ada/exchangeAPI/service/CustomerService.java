@@ -2,7 +2,6 @@ package br.ada.exchangeAPI.service;
 
 import br.ada.exchangeAPI.controller.dto.CustomerRequest;
 import br.ada.exchangeAPI.controller.exception.CpfNotFoundError;
-import br.ada.exchangeAPI.controller.exception.CpfValidationError;
 import br.ada.exchangeAPI.controller.exception.CustomerNotActiveError;
 import br.ada.exchangeAPI.model.Customer;
 import br.ada.exchangeAPI.controller.exception.CustomerValidationError;
