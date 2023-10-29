@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,9 +29,14 @@ public class AuthenticationController {
                 loginRequest.getPassword()
         );
 
-        var authentication = authenticationManager.authenticate(authenticate);
-        var token = tokenService.tokenGenerate((Customer) authentication.getPrincipal());
+        try {
+            var authentication = authenticationManager.authenticate(authenticate);
+            var token = tokenService.tokenGenerate((Customer) authentication.getPrincipal());
 
-        return ResponseEntity.ok().body(new TokenResponse(token));
+            return ResponseEntity.ok().body(new TokenResponse(token));
+        } catch (AuthenticationException e) {
+            return ResponseEntity.status(401).body("Authentication failed. Please check your login information and try again.");
+        }
+
     }
 }

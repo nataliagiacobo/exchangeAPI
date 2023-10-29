@@ -27,9 +27,6 @@ public class CustomerValidationError implements IValidationAttributes {
 
   @Override
   public void validateMaritalStatus(MaritalStatus maritalStatus) {
-    if (maritalStatus == null) {
-      throw new IllegalArgumentException("Marital status is required");
-    }
     if (!Arrays.asList(MaritalStatus.values()).contains(maritalStatus)) {
       throw new IllegalArgumentException("Invalid marital status. Please, choose one of the following: SINGLE, MARRIED, DIVORCED, WIDOWED");
     }
