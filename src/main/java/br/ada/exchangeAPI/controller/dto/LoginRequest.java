@@ -7,7 +7,6 @@ import org.hibernate.validator.constraints.br.CPF;
 @Getter
 @Setter
 public class LoginRequest {
-    @CPF
     private String cpf;
     private String password;
 }
