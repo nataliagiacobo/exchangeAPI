@@ -4,6 +4,7 @@ import br.ada.exchangeAPI.controller.dto.CustomerRequest;
 import br.ada.exchangeAPI.controller.exception.CpfNotFoundError;
 import br.ada.exchangeAPI.controller.exception.CpfValidationError;
 import br.ada.exchangeAPI.model.Customer;
+import br.ada.exchangeAPI.controller.exception.CustomerValidationError;
 import java.util.List;
 
 import br.ada.exchangeAPI.utils.CustomerConvert;
@@ -16,7 +17,7 @@ import br.ada.exchangeAPI.controller.dto.CustomerResponse;
 import br.ada.exchangeAPI.repository.CustomerRepository;
 
 @Service
-public class CustomerService {
+public class CustomerService extends CustomerValidationError {
 	
 	@Autowired
 	CustomerRepository customerRepository;
@@ -38,6 +39,11 @@ public class CustomerService {
 	public CustomerResponse saveNewCustomer(CustomerRequest customerRequest) throws CpfValidationError {
 		Customer customer = CustomerConvert.toEntity(customerRequest);
 		if(!CPFValidator.cpfValidate(customer.getCpf())) throw new CpfValidationError("Invalid CPF");
+		validateName(customer.getName());
+		validateBirthDate(customer.getBirthDate());
+		validateMaritalStatus(customer.getMaritalStatus());
+		validateSex(customer.getSex());
+		validatePassword(customer.getPassword());
 		customer.setPassword(passwordEncoder.encode(customerRequest.getPassword()));
 		customer.setActive(true);
 		return CustomerConvert.toResponse(customerRepository.save(customer));
