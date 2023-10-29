@@ -30,7 +30,7 @@ public class CustomerController {
 
 	@PostMapping()
 	public ResponseEntity<CustomerResponse> saveNewCustomer(
-			@Valid @CPF @RequestBody CustomerRequest customerRequest
+			@Valid @RequestBody CustomerRequest customerRequest
 	) throws CpfValidationError {
 		CustomerResponse customer = customerService.saveNewCustomer(customerRequest);
 		return ResponseEntity.created(URI.create("/customer/"+customer.getId())).body(customer);
