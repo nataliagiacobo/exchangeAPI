@@ -15,28 +15,28 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Integer id; //generated
+    private Integer id;
 
-    @ManyToOne() //(cascade=CascadeType.PERSIST)
-    private Customer customer; //related to customers table -> cpf
+    @ManyToOne()
+    private Customer customer;
 
     @Column(name = "currency", nullable = false)
-    private String currency; //input
+    private String currency;
 
     @Column(name = "exchange_amount", precision = 16, scale = 2, nullable = false)
-    private BigDecimal exchangeAmount; //input
+    private BigDecimal exchangeAmount;
 
     @Column(name = "quotation", precision = 5, scale = 4)
-    private BigDecimal quotation; //comes from external API - QuotationService
+    private BigDecimal quotation;
 
     @Column(name = "operation_cost", precision = 16, scale = 2)
-    private BigDecimal operationCost; //calculated
+    private BigDecimal operationCost;
 
     @Column(name = "bank_branch", nullable = false)
-    private String bankBranch; //input
+    private String bankBranch;
 
     @Column(name = "order_date")
     @CreatedDate
-    private LocalDateTime orderTimestamp; //generated
+    private LocalDateTime orderTimestamp;
 
 }
