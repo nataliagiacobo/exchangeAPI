@@ -193,7 +193,7 @@ A proposta é implementar uma API que permita ao cliente realizar a compra de mo
   </details>
 
   :x:&nbsp;&nbsp; A requisição irá falhar se algum dos atributos não for preenchido corretamente ou esteja ausente.<br> 
-  O endpoint retornará um erro <code>400</code> com a mensagem: <code>{ "All fields must be filled out correctly" }</code>
+  O endpoint retornará um erro <code>400</code> com uma mensagem referente. Exemplo: <code>{ "Cpf is required" }</code>
   <br>
 </details>
 
@@ -208,7 +208,7 @@ A proposta é implementar uma API que permita ao cliente realizar a compra de mo
   -&nbsp;&nbsp;&nbsp;Para deletar um cliente, especifique o `id` desejado na URL, conforme mostrado acima. Não é necessário incluir um corpo de requisição, pois a ação de exclusão é baseada no `id` fornecido.
   
  :x:&nbsp;&nbsp;A requisição irá falhar se o ID não estiver associado a nenhum cliente cadastrado.<br> 
- O endpoint retornará um erro <code>404</code> com a mensagem: <code>{ "ID not found" }</code>
+ O endpoint retornará um erro <code>404</code>
  </details>
 
 ### :currency_exchange: Order
