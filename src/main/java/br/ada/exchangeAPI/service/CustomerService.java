@@ -2,13 +2,11 @@ package br.ada.exchangeAPI.service;
 
 import br.ada.exchangeAPI.controller.dto.CustomerRequest;
 import br.ada.exchangeAPI.controller.exception.CpfNotFoundError;
-import br.ada.exchangeAPI.controller.exception.CpfValidationError;
 import br.ada.exchangeAPI.model.Customer;
 import br.ada.exchangeAPI.controller.exception.CustomerValidationError;
 import java.util.List;
 
 import br.ada.exchangeAPI.utils.CustomerConvert;
-import br.ada.exchangeAPI.utils.CPFValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -36,9 +34,9 @@ public class CustomerService extends CustomerValidationError {
 	}
 
 
-	public CustomerResponse saveNewCustomer(CustomerRequest customerRequest) throws CpfValidationError {
+	public CustomerResponse saveNewCustomer(CustomerRequest customerRequest) {
 		Customer customer = CustomerConvert.toEntity(customerRequest);
-		if(!CPFValidator.cpfValidate(customer.getCpf())) throw new CpfValidationError("Invalid CPF");
+		validateCpf(customer.getCpf());
 		validateName(customer.getName());
 		validateBirthDate(customer.getBirthDate());
 		validateMaritalStatus(customer.getMaritalStatus());
@@ -62,6 +60,12 @@ public class CustomerService extends CustomerValidationError {
 	
 	public CustomerResponse updateCustomer(CustomerRequest customerRequest, Integer id) {
 		Customer customer = CustomerConvert.toEntity(customerRequest);
+		validateName(customer.getName());
+		validateCpf(customer.getCpf());
+		validateBirthDate(customer.getBirthDate());
+		validateMaritalStatus(customer.getMaritalStatus());
+		validateSex(customer.getSex());
+		validatePassword(customer.getPassword());
 		customer.setId(id);
 		customer.setPassword(passwordEncoder.encode(customerRequest.getPassword()));
 		customer.setActive(true);

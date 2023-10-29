@@ -8,6 +8,8 @@ public interface IValidationAttributes {
 
   void validateName(String name);
 
+  void validateCpf(String cpf);
+
   void validateBirthDate(LocalDate birthDate);
 
   void validateMaritalStatus(MaritalStatus maritalStatus);
