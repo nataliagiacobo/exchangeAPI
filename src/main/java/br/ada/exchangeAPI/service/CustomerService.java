@@ -63,6 +63,7 @@ public class CustomerService extends CustomerValidationError {
 	public CustomerResponse updateCustomer(CustomerRequest customerRequest, Integer id) {
 		Customer customer = CustomerConvert.toEntity(customerRequest);
 		customer.setId(id);
+		customer.setPassword(passwordEncoder.encode(customerRequest.getPassword()));
 		customer.setActive(true);
 		return CustomerConvert.toResponse(customerRepository.save(customer));
 	}
