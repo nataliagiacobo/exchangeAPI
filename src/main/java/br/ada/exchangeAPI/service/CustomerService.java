@@ -3,16 +3,14 @@ package br.ada.exchangeAPI.service;
 import br.ada.exchangeAPI.controller.dto.CustomerRequest;
 import br.ada.exchangeAPI.controller.exception.CpfNotFoundError;
 import br.ada.exchangeAPI.controller.exception.CpfValidationError;
+import br.ada.exchangeAPI.controller.exception.CustomerNotActiveError;
 import br.ada.exchangeAPI.model.Customer;
 import br.ada.exchangeAPI.controller.exception.CustomerValidationError;
 import java.util.List;
-
 import br.ada.exchangeAPI.utils.CustomerConvert;
-import br.ada.exchangeAPI.utils.CPFValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import br.ada.exchangeAPI.controller.dto.CustomerResponse;
 import br.ada.exchangeAPI.repository.CustomerRepository;
 
@@ -25,9 +23,10 @@ public class CustomerService extends CustomerValidationError {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
-	public CustomerResponse getCustomerByCpf(String customerCpf) throws CpfNotFoundError {
+	public CustomerResponse getCustomerByCpf(String customerCpf) throws CpfNotFoundError, CustomerNotActiveError {
 		Customer customerExist = customerRepository.findCustomerByCpf(customerCpf);
         if (customerExist == null) throw new CpfNotFoundError("CPF not found");
+		if (!customerExist.getActive()) throw new CustomerNotActiveError("Customer not active anymore");
 		return CustomerConvert.toResponse(customerExist);
 	}
 
@@ -36,9 +35,9 @@ public class CustomerService extends CustomerValidationError {
 	}
 
 
-	public CustomerResponse saveNewCustomer(CustomerRequest customerRequest) throws CpfValidationError {
+	public CustomerResponse saveNewCustomer(CustomerRequest customerRequest) {
 		Customer customer = CustomerConvert.toEntity(customerRequest);
-		if(!CPFValidator.cpfValidate(customer.getCpf())) throw new CpfValidationError("Invalid CPF");
+		validateCpf(customer.getCpf());
 		validateName(customer.getName());
 		validateBirthDate(customer.getBirthDate());
 		validateMaritalStatus(customer.getMaritalStatus());
@@ -62,6 +61,12 @@ public class CustomerService extends CustomerValidationError {
 	
 	public CustomerResponse updateCustomer(CustomerRequest customerRequest, Integer id) {
 		Customer customer = CustomerConvert.toEntity(customerRequest);
+		validateName(customer.getName());
+		validateCpf(customer.getCpf());
+		validateBirthDate(customer.getBirthDate());
+		validateMaritalStatus(customer.getMaritalStatus());
+		validateSex(customer.getSex());
+		validatePassword(customer.getPassword());
 		customer.setId(id);
 		customer.setPassword(passwordEncoder.encode(customerRequest.getPassword()));
 		customer.setActive(true);

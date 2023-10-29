@@ -38,6 +38,38 @@ A proposta é implementar uma API que permita ao cliente realizar a compra de mo
 
 ## 📚 Documentação (endpoints)
 
+### :woman_technologist: Login
+<details>
+  <summary> Autenticação (POST) </summary>
+    <br>
+
+  | Método | Funcionalidade | URL |
+  |---|---|---|
+  | `POST` | Realiza o login de um cliente cadastrado | `http://localhost:8080/login`
+
+  <details>
+    <summary> A estrutura do body da requisição deverá seguir o padrão abaixo: </summary>
+
+    {
+      "cpf": "String",
+      "password": "String"
+    }
+  
+  </details>
+
+  <details>
+    <summary> Um exemplo de resposta bem-sucedida com <code>status 200</code> é: </summary>
+    
+    {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo1LCJkaXNwbGF5TmFtZSI6InVzdWFyaW8gZGUgdGVzdGUiLCJlbWFpbCI6InRlc3RlQGVtYWlsLmNvbSIsImltYWdlIjoibnVsbCJ9LCJpYXQiOjE2MjAyNDQxODcsImV4cCI6MTYyMDY3NjE4N30.Roc4byj6mYakYqd9LTCozU1hd9k_Vw5IWKGL4hcCVG8"
+    }
+
+  </details>
+
+   :x:&nbsp;&nbsp;A requisição irá falhar se as informações do usuário estiverem incorretas ou não houver cadastro prévio.<br>
+  O endpoint retornará um erro <code>401</code> com a mensagem: <code>{ "Authentication failed. Please check your login information and try again." }</code><br>
+</details>
+
 ### :bust_in_silhouette: Customer
 <details>
   <summary> Cadastro (POST) </summary>
@@ -58,6 +90,7 @@ A proposta é implementar uma API que permita ao cliente realizar a compra de mo
       "birthDate": "Date", // Seguir o padrão 'YYYY-MM-DD'
       "maritalStatus": "MaritalStatus", // Valores possíveis: "SINGLE", "MARRIED", "DIVORCED", "WIDOWED"
       "sex": "Sex" // Valores possíveis: "MALE", "FEMALE", "OTHER"
+      "password": "String"
     }
   
   </details>
@@ -72,7 +105,7 @@ A proposta é implementar uma API que permita ao cliente realizar a compra de mo
   </details>
 
   :x:&nbsp;&nbsp;A requisição irá falhar se algum dos atributos não for preenchido corretamente ou esteja ausente.<br>
-  O endpoint retornará um erro <code>400</code> com a mensagem: <code>{ "All fields must be filled out correctly" }</code><br>
+  O endpoint retornará um erro <code>400</code> com uma mensagem referente. Exemplo: <code>{ "Name is required" }</code><br>
 </details>
 
 <details>
@@ -160,7 +193,7 @@ A proposta é implementar uma API que permita ao cliente realizar a compra de mo
   </details>
 
   :x:&nbsp;&nbsp; A requisição irá falhar se algum dos atributos não for preenchido corretamente ou esteja ausente.<br> 
-  O endpoint retornará um erro <code>400</code> com a mensagem: <code>{ "All fields must be filled out correctly" }</code>
+  O endpoint retornará um erro <code>400</code> com uma mensagem referente. Exemplo: <code>{ "Cpf is required" }</code>
   <br>
 </details>
 
@@ -175,7 +208,7 @@ A proposta é implementar uma API que permita ao cliente realizar a compra de mo
   -&nbsp;&nbsp;&nbsp;Para deletar um cliente, especifique o `id` desejado na URL, conforme mostrado acima. Não é necessário incluir um corpo de requisição, pois a ação de exclusão é baseada no `id` fornecido.
   
  :x:&nbsp;&nbsp;A requisição irá falhar se o ID não estiver associado a nenhum cliente cadastrado.<br> 
- O endpoint retornará um erro <code>404</code> com a mensagem: <code>{ "ID not found" }</code>
+ O endpoint retornará um erro <code>404</code>
  </details>
 
 ### :currency_exchange: Order
