@@ -5,7 +5,6 @@ import br.ada.exchangeAPI.model.enums.MaritalStatus;
 import br.ada.exchangeAPI.model.enums.Sex;
 import java.time.LocalDate;
 import java.util.Arrays;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 
 public class CustomerValidationError implements IValidationAttributes {
 
