@@ -4,6 +4,7 @@ import br.ada.exchangeAPI.controller.dto.CustomerRequest;
 import br.ada.exchangeAPI.controller.dto.CustomerResponse;
 import br.ada.exchangeAPI.controller.exception.CpfNotFoundError;
 import br.ada.exchangeAPI.controller.exception.CpfValidationError;
+import br.ada.exchangeAPI.controller.exception.CustomerNotActiveError;
 import br.ada.exchangeAPI.service.CustomerService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -24,7 +25,7 @@ public class CustomerController {
 	
 	@GetMapping("/cpf/{cpf}")
 	@SecurityRequirement(name = "bearerAuth")
-	public ResponseEntity<CustomerResponse> getCustomerByCpf(@PathVariable String cpf) throws CpfNotFoundError{
+	public ResponseEntity<CustomerResponse> getCustomerByCpf(@PathVariable String cpf) throws CpfNotFoundError, CustomerNotActiveError {
 		return ResponseEntity.ok(customerService.getCustomerByCpf(cpf));
 	}
 
