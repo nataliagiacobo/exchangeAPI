@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import br.ada.exchangeAPI.controller.exception.CpfNotFoundError;
 import br.ada.exchangeAPI.controller.exception.CpfValidationError;
+import br.ada.exchangeAPI.controller.exception.ValidationError;
+import java.util.ArrayList;
+import java.util.List;
 import br.ada.exchangeAPI.controller.exception.CurrencyException;
 import br.ada.exchangeAPI.controller.exception.LoginValidationError;
 import br.ada.exchangeAPI.model.enums.MaritalStatus;
@@ -60,17 +63,18 @@ public class ControllerAdvice {
     @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public String handlerMethodArgumentNotValid(MethodArgumentNotValidException exception) {
-        List<LoginValidationError> errors = new ArrayList<>();
+        List<ValidationError> errors = new ArrayList<>();
         List<FieldError> fieldErros = exception.getBindingResult().getFieldErrors();
 
         fieldErros.forEach(e -> {
             String message = messageSource.getMessage(e, LocaleContextHolder.getLocale());
-            LoginValidationError validationError = new LoginValidationError(e.getField(), message);
+            ValidationError validationError = new ValidationError(e.getField(), message);
             errors.add(validationError);
         });
 
         return errors.toString();
     }
+
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidFormatException.class)
     public String handleInvalidFormatMaritalStatus(InvalidFormatException ex) {
@@ -81,5 +85,4 @@ public class ControllerAdvice {
         }
         return null;
     }
-
 }

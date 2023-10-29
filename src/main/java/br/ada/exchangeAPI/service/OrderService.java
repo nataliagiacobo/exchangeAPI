@@ -5,6 +5,7 @@ import br.ada.exchangeAPI.controller.dto.OrderRequest;
 import br.ada.exchangeAPI.controller.dto.OrderResponse;
 import br.ada.exchangeAPI.controller.exception.CpfNotFoundError;
 import br.ada.exchangeAPI.controller.exception.CurrencyException;
+import br.ada.exchangeAPI.controller.exception.ValidationError;
 import br.ada.exchangeAPI.controller.exception.CustomerNotActiveError;
 import br.ada.exchangeAPI.model.Customer;
 import br.ada.exchangeAPI.model.Order;
@@ -35,7 +36,7 @@ public class OrderService {
     @Autowired
     CustomerService customerService;
 
-    public OrderResponse saveOrder(OrderRequest orderDTO) throws CurrencyException, CpfNotFoundError, CustomerNotActiveError {
+    public OrderResponse saveOrder(OrderRequest orderDTO) throws CurrencyException, CpfNotFoundError, ValidationError, CustomerNotActiveError {
 
         CustomerResponse existingCustomer = customerService.getCustomerByCpf(orderDTO.getCpf());
 
@@ -52,8 +53,6 @@ public class OrderService {
         OrderResponse orderResponse = OrderConvert.toResponse(orderRepository.save(order));
         return orderResponse;
     }
-
-
 
     public List<OrderResponse> getOrdersByCpf(String cpf) throws CpfNotFoundError, CustomerNotActiveError {
 

@@ -6,6 +6,7 @@ import br.ada.exchangeAPI.model.enums.Sex;
 import br.ada.exchangeAPI.utils.CPFValidator;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 public class CustomerValidationError implements IValidationAttributes {
 
