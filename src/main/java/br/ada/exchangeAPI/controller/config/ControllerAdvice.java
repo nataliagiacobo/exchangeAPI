@@ -1,8 +1,7 @@
 package br.ada.exchangeAPI.controller.config;
 
-import br.ada.exchangeAPI.controller.exception.CpfNotFoundError;
-import br.ada.exchangeAPI.controller.exception.CpfValidationError;
-import br.ada.exchangeAPI.controller.exception.LoginValidationError;
+import br.ada.exchangeAPI.controller.exception.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import br.ada.exchangeAPI.controller.exception.CurrencyException;
 
 @RestControllerAdvice
 public class ControllerAdvice {
@@ -46,6 +43,13 @@ public class ControllerAdvice {
     public String handlerIllegalArgument(IllegalArgumentException exception){
         return exception.getMessage();
     }
+
+    @ResponseStatus(code = HttpStatus.FORBIDDEN)
+    @ExceptionHandler(CustomerNotActiveError.class)
+    public String handlerCustomerNotActiveError(CustomerNotActiveError exception){
+        return exception.getDescription();
+    }
+
 
     @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(MethodArgumentNotValidException.class)

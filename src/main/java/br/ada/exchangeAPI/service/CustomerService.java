@@ -3,6 +3,7 @@ package br.ada.exchangeAPI.service;
 import br.ada.exchangeAPI.controller.dto.CustomerRequest;
 import br.ada.exchangeAPI.controller.exception.CpfNotFoundError;
 import br.ada.exchangeAPI.controller.exception.CpfValidationError;
+import br.ada.exchangeAPI.controller.exception.CustomerNotActiveError;
 import br.ada.exchangeAPI.model.Customer;
 import br.ada.exchangeAPI.controller.exception.CustomerValidationError;
 import java.util.List;
@@ -25,9 +26,10 @@ public class CustomerService extends CustomerValidationError {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
-	public CustomerResponse getCustomerByCpf(String customerCpf) throws CpfNotFoundError {
+	public CustomerResponse getCustomerByCpf(String customerCpf) throws CpfNotFoundError, CustomerNotActiveError {
 		Customer customerExist = customerRepository.findCustomerByCpf(customerCpf);
         if (customerExist == null) throw new CpfNotFoundError("CPF not found");
+		if (!customerExist.getActive()) throw new CustomerNotActiveError("Customer not active anymore");
 		return CustomerConvert.toResponse(customerExist);
 	}
 
