@@ -1,14 +1,19 @@
 package br.ada.exchangeAPI.controller.exception;
 
 import br.ada.exchangeAPI.interfaces.IValidationAttributes;
+import br.ada.exchangeAPI.model.Customer;
 import br.ada.exchangeAPI.model.enums.MaritalStatus;
 import br.ada.exchangeAPI.model.enums.Sex;
+import br.ada.exchangeAPI.repository.CustomerRepository;
 import br.ada.exchangeAPI.utils.CPFValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 
 public class CustomerValidationError implements IValidationAttributes {
+
+  @Autowired
+  CustomerRepository customerRepository;
 
   @Override
   public void validateName(String name) {
@@ -27,6 +32,8 @@ public class CustomerValidationError implements IValidationAttributes {
       } catch (CpfValidationError e) {
         throw new RuntimeException(e);
       }
+    Customer customerExist = customerRepository.findCustomerByCpf(cpf);
+    if (customerExist != null) throw new IllegalArgumentException("CPF already registered");
   }
 
   @Override
